@@ -12,7 +12,10 @@ class LEDPanel(Node):
 	def __init__(self):
 		super().__init__("led_panel")
 		self.publisher = self.create_publisher(LedState, "led_states", 10)
-		self.state = [0,0,0]
+		self.declare_parameter('led_states', [0,0,0])
+		led_states = self.get_parameter('led_states').value
+		# self.state = [0,0,0]
+		self.state = led_states
 		self.create_timer(1, self.publish_state)
 		self.get_logger().info("publishing on topic led_states!")
 

@@ -11,10 +11,12 @@ class PublisherNode(Node):
 		self.publisher = self.create_publisher(String, "robot_news", 10)
 		self.timer = self.create_timer(1, self.publish_news)
 		self.get_logger().info("robot news station started!")
+		self.declare_parameter('robot_name', 'Eren')
 
 	def publish_news(self):
+		name = self.get_parameter('robot_name').value
 		msg = String()
-		msg.data = f"publishing: {self.count}"
+		msg.data = f"{name} publishing: {self.count}"
 		self.publisher.publish(msg)
 		self.count += 1
 
